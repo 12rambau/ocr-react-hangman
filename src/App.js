@@ -1,26 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react'
 import './App.css';
+import {DICO} from './Dico'
+import Letters, {TEST_LETTERS} from './Letter'
+import Letter from './Letter';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends Component {
+
+  state = {
+    word: this.selectWord(),
+    letters: TEST_LETTERS,
+    nbTest: 0,
+    testedLettes: []
+  }
+
+  selectWord(){
+    return DICO[Math.floor(Math.random()*DICO.length)]
+  }
+
+  render() {
+    const { word, letters, nbTest, testedLettes } = this.state
+    return (
+      <div className="pendue">
+        <div className="word">
+        {word}
+        </div>
+        <div className="hidden_word">
+          {letters.map(({value, feedback}, index) => (
+            <Letter
+              value={value}
+              feedback={feedback}
+              key={index}
+            />
+          ))}
+        </div>
+
+      </div>
+    )
+  }
 }
 
 export default App;
